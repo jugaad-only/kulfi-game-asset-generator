@@ -12,12 +12,12 @@ The workflow is built for a mobile game catalog. It keeps titles outside thumbna
 
 ## Install
 
-Clone the repository, then copy the skill into your Codex skills directory:
+Clone the repository directly into your Codex skills directory:
 
 ```bash
-git clone https://github.com/jugaad-only/game-thumbnail-generator.git
 mkdir -p ~/.codex/skills
-cp -R game-thumbnail-generator/game-thumbnail-generator ~/.codex/skills/
+git clone https://github.com/jugaad-only/game-thumbnail-generator.git \
+  ~/.codex/skills/game-thumbnail-generator
 ```
 
 Start a new Codex task after installation. Confirm that this file exists:
@@ -86,7 +86,7 @@ Review the mappings, then rerun with `--apply` to copy approved assets.
 ## Test the skill
 
 ```bash
-cd game-thumbnail-generator
+cd ~/.codex/skills/game-thumbnail-generator
 python3 scripts/smoke_test_thumbnail_skill.py
 ```
 
@@ -103,4 +103,16 @@ game-thumbnail-generator/
   scripts/               Initialize, validate, export, and test tools
 ```
 
-See [`game-thumbnail-generator/SKILL.md`](game-thumbnail-generator/SKILL.md) for the complete operating contract and [`references/colleague-quick-start.md`](game-thumbnail-generator/references/colleague-quick-start.md) for the handoff workflow.
+## Team update workflow
+
+The GitHub repository is read-only for teammates. After the first clone, update the installed skill with:
+
+```bash
+git -C ~/.codex/skills/game-thumbnail-generator pull --ff-only origin main
+```
+
+`--ff-only` prevents Git from creating an accidental local merge commit. If a teammate has modified the checkout, the pull stops and asks them to resolve or discard their local work instead of mixing it with the shared skill.
+
+Start a new Codex task after pulling so the updated skill is loaded.
+
+See [`SKILL.md`](SKILL.md) for the complete operating contract and [`references/colleague-quick-start.md`](references/colleague-quick-start.md) for the handoff workflow.
