@@ -1,9 +1,10 @@
 # Quality Gates
 
-Use this before asking the user to approve a thumbnail and again before finalizing.
+Run the matching command in `candidate-validation.md` first. Use this human/visual gate only after machine QA passes, then use it again before finalizing. A candidate needs both passes before presentation.
 
 ## 3:4 Candidate Gate
 
+- A saved `validate_candidate.py thumbnail_3x4` report passes for the exact candidate before the file is shown.
 - Ratio is 3:4 portrait.
 - Asset is saved in the correct draft folder with a versioned `-3x4-vNN` name.
 - For puzzle, board, word, grid, route, or rules-based games, the actual mechanic was verified from a source before generation.
@@ -27,6 +28,7 @@ Use this before asking the user to approve a thumbnail and again before finalizi
 
 ## 16:9 Gate
 
+- A saved `validate_candidate.py thumbnail_16x9` report passes for the exact candidate before the file is shown.
 - User explicitly approved the 3:4 direction before this was made.
 - It is recomposed for landscape, not blind-cropped from portrait.
 - Asset is saved in the correct draft folder with a versioned `-16x9-vNN` name until final approval.
@@ -39,6 +41,7 @@ Use this before asking the user to approve a thumbnail and again before finalizi
 
 ## Daily Game Icon Gate
 
+- A saved `validate_candidate.py daily_game_icon` report passes for the exact candidate before the file is shown.
 - Every thumbnail format requested for the game is explicitly approved before icon work begins.
 - `source-notes.md` records the internet reference search terms, source URLs, and distilled recognition or silhouette cues. If browsing was unavailable or declined, that limitation is recorded.
 - A relevant Flaticon black-fill or glyph reference was checked when available, with its URL, author, style, and displayed license recorded. It was used for silhouette study only unless reuse was deliberately licensed and attributed.
@@ -62,6 +65,7 @@ Use this before asking the user to approve a thumbnail and again before finalizi
 
 ## Partner-Turn Icon Gate
 
+- A saved `validate_candidate.py partner_turn_icon` report passes for the exact WebP/SVG pair and approved daily-icon source before the files are shown.
 - The corresponding daily game icon is explicitly approved and finalized.
 - The derivative preserves the approved symbol, silhouette, monochrome color family, and positive/negative space while simplifying the felt source into a flat single-color vector treatment.
 - Any compositional change is justified by the partner-turn UI role and does not create a new visual identity.
@@ -72,6 +76,7 @@ Use this before asking the user to approve a thumbnail and again before finalizi
 
 ## Info-Page Square Logo Gate
 
+- A saved `validate_candidate.py info_page_square_logo` report passes for the exact candidate and approved daily-icon source before the file is shown.
 - The corresponding daily game icon is explicitly approved and finalized; no other derivative asset is a prerequisite.
 - The asset is square and exported at 1024 x 1024 WebP unless the project specifies another target.
 - The derivative preserves the approved daily icon's symbol, silhouette, monochrome color family, felt material, and positive/negative space.
@@ -83,20 +88,25 @@ Use this before asking the user to approve a thumbnail and again before finalizi
 
 ## Completed-State Gate
 
+- A saved `validate_candidate.py completed` report passes for the exact lossless candidate and approved daily-icon source before the file is shown.
 - The corresponding daily game icon is explicitly approved and finalized; no other derivative asset is a prerequisite.
+- The production candidate was created with `scripts/compose_completed_banner.py`; generative image output, manual painting, arbitrary recoloring, and substitute compositors are rejected even if visually similar.
+- A lossless PNG QA source exists in `iterations/`, and `scripts/validate_completed_banner.py <lossless-png>` passes before the candidate is presented. A validator failure blocks presentation, approval, promotion, and export.
 - The asset uses a 1626 x 588 canvas unless the project specifies another target; alternate resolutions preserve the same aspect ratio.
-- The approved daily icon's silhouette and positive/negative space remain recognizable.
+- The approved daily icon's alpha silhouette and positive/negative space remain recognizable; its game-specific color and felt texture are not carried into this target.
 - The background uses the fixed shared template: a horizontally uniform dark teal vertical gradient near `#1C272C` at the top, `#0C1B1F` at mid-height, and `#03171C` at the bottom.
 - The underlying gradient is identical across games and is not recolored from the approved icon. It contains no texture, grain, noise, vignette, spotlight, glow, or game-specific atmospheric variation.
 - Hangman was excluded entirely from reference selection and QA.
-- The symbol is oversized, right-positioned, and intentionally edge-cropped without creating an accidental or unrecognizable fragment.
-- The left side remains quiet, uncluttered, and suitable for application-rendered completion UI.
+- The symbol is a subtle neutral dark-teal tonal lift over the template, approximately matching the reference family's `+8, +7, +7` RGB lift at full mask opacity. The underlying vertical gradient remains visible through it; no flat game-colored fill appears.
+- The symbol materially fills the right half, is intentionally cropped beyond multiple edges where its shape permits, and remains recognizable. Reject a small isolated corner badge.
+- The overlay is clipped to the right half. The entire left half of the lossless source is pixel-identical to the bare shared template, not merely visually quiet; minor WebP encoding differences are acceptable.
 - No title, completion copy, score, button, badge, logo, watermark, or readable UI label is baked into the asset.
-- WebP is present for the standard set; PNG is included only when required by the project or matching reference set.
+- WebP is present for the standard set. The lossless PNG QA source is retained as an iteration; a canonical PNG is included only when required by the project or matching reference set.
 - The exact completed-state candidate receives explicit approval before final placement.
 
 ## Your-Turn Background Gate
 
+- A saved `validate_candidate.py your_turn_background` report passes for the exact candidate and approved daily-icon source before the file is shown.
 - The corresponding daily game icon is explicitly approved and finalized; no other derivative asset is a prerequisite.
 - The asset is an opaque 813 x 420 WebP unless the project specifies a 2x equivalent at the same aspect ratio.
 - The small foreground felt icon preserves the approved symbol, silhouette, color family, material treatment, and positive/negative space.
@@ -151,6 +161,6 @@ Reject or revise when any of these appear:
 - Partner-turn or another icon-derived asset was started before the daily game icon was approved.
 - An icon derivative changes the approved symbol, palette, felt treatment, or positive/negative space without a target-specific reason.
 - An info-page square logo is off-center, tightly cropped, uses a mismatched background hue, or introduces an unapproved symbol.
-- A completed-state asset is bright, centers the symbol, fills the quiet left UI area, or crops the symbol into an unrecognizable shape.
+- A completed-state asset is bright, inherits the daily icon's game-specific color, uses a flat opaque symbol fill, centers the symbol, changes any left-half template pixel, presents a small corner badge, crops the symbol into an unrecognizable shape, lacks a lossless QA source, bypasses the deterministic compositor, or fails the completed-banner validator.
 - A completed-state background is recolored per game, varies horizontally, adds texture or lighting effects, or uses the Hangman asset as a reference.
 - A your-turn background fills the quiet left UI area, omits the faint oversized watermark, moves the crisp felt icon away from the right, uses a dark completed-state treatment, or introduces a symbol not present in the approved daily icon.

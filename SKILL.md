@@ -3,18 +3,20 @@ name: game-thumbnail-generator
 description: Generate, revise, approve, and organize Kulfi mobile game thumbnails, daily game icons, partner-turn icons, your-turn backgrounds, and dependent assets through staged approval gates.
 ---
 
-# Kulfi Game Asset Generator
+# Game Thumbnail Generator
 
 Use this skill when the user asks to generate, revise, review, approve, finalize, document, or organize mobile game thumbnails or their dependent daily-game icon assets for the Kulfi catalog.
 
 ## Core Contract
 
+- Lock every request to exactly one asset type before generation. Read [references/candidate-validation.md](references/candidate-validation.md) and use its routing table. If `game icon`, `icon`, `turn asset`, or similar wording could mean more than one asset type, ask which exact target is intended instead of guessing.
+- Run `scripts/validate_candidate.py` immediately after **every** generated or composed candidate and save its JSON report in `iterations/`. A validator failure is a hard stop: do not display, present, request approval for, promote, or export the candidate. After the machine check passes, run the matching human visual gate in [references/quality-gates.md](references/quality-gates.md). Both checks are mandatory.
 - Generate the primary asset as a **3:4 portrait mobile game tile first**.
 - Do **not** generate or finalize the 16:9 version until the user explicitly approves the 3:4 direction.
 - After approval, create the 16:9 asset as an intentional recomposition of the same subject, palette, art style, mechanic, and emotional promise. Do not blindly crop the 3:4 image.
 - Do **not** create a `daily_game_icon` until every thumbnail format requested for that game has been explicitly approved.
 - Do **not** create `daily_games_partner_turn_icons`, `daily_games_info_page_square_logos`, `daily_games_completed`, `daily_game_your_turn_bg`, or other icon-derived assets until the corresponding `daily_game_icon` has been explicitly approved.
-- Treat the approved `daily_game_icon` as the source of truth for the symbol, silhouette, monochrome color family, and positive/negative space used by later icon derivatives. Preserve or simplify the felt material according to the target-specific reference.
+- Treat the approved `daily_game_icon` as the source of truth for the symbol, silhouette, and positive/negative space used by later icon derivatives. Preserve its color family except where a target-specific reference requires a shared treatment; completed-state banners always use the fixed dark-teal tonal treatment and never inherit the icon color.
 - Every `daily_game_icon` must follow the Felt Icon Rules below.
 - Run a name-recognition QA before presenting any daily icon: hide the title and ask, `Does this really look like [GAME NAME]?` For a literal object or action name, reject any silhouette that reads more strongly as a generic badge, mascot, unrelated prop, or another object.
 - Before visual generation, run a focused internet reference pass unless the user explicitly opts out or browsing is unavailable. Use real-world or category references to verify recognition cues and separate visual references for material or composition inspiration. Record the source URLs and distilled takeaways in `source-notes.md`; never copy one reference's exact artwork, branding, or proprietary character design.
@@ -107,9 +109,9 @@ Complete stages 1-3 in order. After the `daily_game_icon` is approved, the partn
 ### 2. Create And Finalize Game Thumbnails
 
 1. Generate the 3:4 portrait thumbnail first, using [references/prompt-recipes.md](references/prompt-recipes.md).
-2. Review it at full size and approximately 180 x 240 using the 3:4 section of [references/quality-gates.md](references/quality-gates.md), then request explicit user approval.
+2. Run `validate_candidate.py thumbnail_3x4` using [references/candidate-validation.md](references/candidate-validation.md). Only after it passes, review it at full size and approximately 180 x 240 using the 3:4 section of [references/quality-gates.md](references/quality-gates.md), then request explicit user approval.
 3. Only after 3:4 approval, create each requested landscape or alternate-ratio thumbnail as an intentional recomposition. Use the relevant section of [references/quality-gates.md](references/quality-gates.md).
-4. Finalize only formats the user explicitly approves. Use [references/folder-structure.md](references/folder-structure.md) for placement and naming, update the matching `asset-pack.json` status and approval date, and use [references/final-asset-list.md](references/final-asset-list.md) when the project keeps a separate registry.
+4. Run `validate_candidate.py thumbnail_16x9` after each 16:9 generation and before visual review or presentation. Finalize only formats the user explicitly approves. Use [references/folder-structure.md](references/folder-structure.md) for placement and naming, update the matching `asset-pack.json` status and approval date, and use [references/final-asset-list.md](references/final-asset-list.md) when the project keeps a separate registry.
 5. Do not start the daily icon stage until all thumbnail formats requested for the game are final.
 
 ### 3. Create And Finalize `daily_game_icons`
@@ -118,35 +120,35 @@ Complete stages 1-3 in order. After the `daily_game_icon` is approved, the partn
 2. Review the recorded internet references before choosing the symbol. For a literal name, use real examples to identify the object's defining outer silhouette rather than relying on generated drafts or memory. Review a relevant Flaticon black-fill or glyph result for economical positive/negative space, but do not copy or import it as production art. Use style references only to guide felt texture, proportions, and visual simplicity.
 3. Use the approved thumbnail and verified mechanic to choose one recognizable game symbol. Render it as one filled shape in one flat felt color on genuine transparency. Let the outer silhouette carry recognition; use an interior cutout only when the symbol would otherwise become ambiguous. The icon must still work as a two-state binary mask at small size.
 4. Run the name-recognition QA from [references/daily-game-icon-references.md](references/daily-game-icon-references.md). For a literal title, an unfamiliar viewer should be able to identify the named object or action from the silhouette without seeing the title.
-5. Review with the Daily Game Icon Gate in [references/quality-gates.md](references/quality-gates.md), save the candidate using [references/folder-structure.md](references/folder-structure.md), and request explicit user approval.
+5. Save the candidate using [references/folder-structure.md](references/folder-structure.md), run `validate_candidate.py daily_game_icon`, and stop on failure. Only after it passes, review with the Daily Game Icon Gate in [references/quality-gates.md](references/quality-gates.md) and request explicit user approval.
 6. Do not start partner-turn or other icon-dependent assets until the exact daily icon is approved and finalized.
 
 ### 4A. Create `daily_games_partner_turn_icons`
 
 1. Read [references/bundled-reference-assets.md](references/bundled-reference-assets.md), [references/partner-turn-icon-references.md](references/partner-turn-icon-references.md), and the Partner-Turn Icon recipe in [references/derivative-prompt-recipes.md](references/derivative-prompt-recipes.md) before creating the partner-turn derivative.
 2. Use the approved daily icon as the source of truth. Preserve its symbol, silhouette, monochrome palette, and positive/negative space while simplifying it into the flat vector treatment used by this target.
-3. Review with the Partner-Turn Icon Gate in [references/quality-gates.md](references/quality-gates.md). Export matching SVG and WebP versions when the asset set requires both, then request explicit user approval before finalizing.
+3. Export matching SVG and WebP candidates, then run `validate_candidate.py partner_turn_icon <candidate.webp> --source <approved-daily-icon.webp> --svg <candidate.svg>`. Stop on failure. Only after it passes, review with the Partner-Turn Icon Gate in [references/quality-gates.md](references/quality-gates.md) and request explicit user approval before finalizing.
 
 ### 4B. Create `daily_games_info_page_square_logos`
 
 1. Start when the corresponding `daily_game_icon` is explicitly approved. This branch does not depend on the partner-turn icon or completed-state asset.
 2. Read [references/bundled-reference-assets.md](references/bundled-reference-assets.md), [references/info-page-square-logo-references.md](references/info-page-square-logo-references.md), and the Info-Page Square Logo recipe in [references/derivative-prompt-recipes.md](references/derivative-prompt-recipes.md) before creating the square-logo derivative.
 3. Use the approved daily icon as the source of truth. Recompose its symbol on a 1:1 canvas with a pale background from the same monochrome color family, centered visual balance, and generous crop-safe breathing room.
-4. Review with the Info-Page Square Logo Gate in [references/quality-gates.md](references/quality-gates.md). Export a 1024 x 1024 WebP unless the project specifies another target, then request explicit user approval before finalizing.
+4. Export a 1024 x 1024 WebP unless the project specifies another target, then run `validate_candidate.py info_page_square_logo <candidate.webp> --source <approved-daily-icon.webp>`. Stop on failure. Only after it passes, review with the Info-Page Square Logo Gate in [references/quality-gates.md](references/quality-gates.md) and request explicit user approval before finalizing.
 
 ### 4C. Create `daily_games_completed`
 
 1. Start when the corresponding `daily_game_icon` is explicitly approved. This branch does not depend on the partner-turn icon or info-page square logo.
 2. Read [references/bundled-reference-assets.md](references/bundled-reference-assets.md), [references/completed-state-references.md](references/completed-state-references.md), and the Completed-State Banner recipe in [references/derivative-prompt-recipes.md](references/derivative-prompt-recipes.md) before creating the completed-state derivative. Ignore the Hangman completed asset entirely; it is not a valid style, color, layout, or background reference.
-3. Use the approved daily icon's silhouette as the source of truth. Composite it over the fixed shared completed-state background template: a horizontally uniform dark teal vertical gradient from approximately `#1C272C` at the top through `#0C1B1F` at mid-height to `#03171C` at the bottom. Enlarge the symbol on the right and crop it intentionally while leaving the left side as untouched background for completion UI.
-4. Review with the Completed-State Gate in [references/quality-gates.md](references/quality-gates.md). Export a 1626 x 588 WebP unless the project specifies another target; add a matching PNG only where the asset set requires it. Request explicit user approval before finalizing.
+3. Use the approved daily icon's alpha silhouette as the source of truth. Composite it over the fixed shared completed-state background template: a horizontally uniform dark teal vertical gradient from approximately `#1C272C` at the top through `#0C1B1F` at mid-height to `#03171C` at the bottom. Do not carry the icon's game-specific color into this target. Render the silhouette as a subtle neutral dark-teal tonal lift that preserves the gradient through the symbol, enlarge it to fill much of the right half, clip it at the canvas edges, and keep the entire left half pixel-identical to the bare template before WebP encoding.
+4. Production completed banners must be built with `scripts/compose_completed_banner.py`; generative image output and hand-built substitutes are not eligible. Adjust only scale and position to keep the symbol recognizable while deeply cropped. Retain a lossless PNG QA source even when WebP is the only deployment deliverable, and run `validate_candidate.py completed <lossless-png> --source <approved-daily-icon.webp>` before presenting the candidate. This delegates the fixed-template checks to `validate_completed_banner.py`. A failed validator is a hard stop: do not show, approve, promote, or export that candidate. Then review the remaining visual criteria in the Completed-State Gate. Export a 1626 x 588 WebP unless the project specifies another target; add a canonical PNG only where the asset set requires it. Request explicit user approval before finalizing.
 
 ### 4D. Create `daily_game_your_turn_bg`
 
 1. Start when the corresponding `daily_game_icon` is explicitly approved. This branch does not depend on the partner-turn icon, info-page square logo, or completed-state asset.
 2. Read [references/bundled-reference-assets.md](references/bundled-reference-assets.md), [references/your-turn-background-references.md](references/your-turn-background-references.md), and the Your-Turn Background recipe in [references/derivative-prompt-recipes.md](references/derivative-prompt-recipes.md) before creating the derivative.
 3. Use the approved daily icon as the source of truth. Place a small, crisp felt icon on the right over a pale same-family background, with a much larger low-contrast version of the same silhouette acting as a cropped watermark behind it. Keep the left side quiet for application-rendered turn UI.
-4. Review with the Your-Turn Background Gate in [references/quality-gates.md](references/quality-gates.md). Export an opaque 813 x 420 WebP unless the project specifies a 2x equivalent, then request explicit user approval before finalizing.
+4. Export an opaque 813 x 420 WebP unless the project specifies a 2x equivalent, then run `validate_candidate.py your_turn_background <candidate.webp> --source <approved-daily-icon.webp>`. Stop on failure. Only after it passes, review with the Your-Turn Background Gate in [references/quality-gates.md](references/quality-gates.md) and request explicit user approval before finalizing.
 
 ### 5. Create Remaining Icon-Dependent Assets
 
@@ -157,6 +159,7 @@ Complete stages 1-3 in order. After the `daily_game_icon` is approved, the partn
 
 ## Validate And Export
 
+- Candidate QA is a pre-presentation gate, not a final-export check. Every versioned iteration must already have a passing `validate_candidate.py` report before it is shown.
 - Run `python3 <skill-folder>/scripts/validate_asset_pack.py <game-folder>` before asking for final handoff or deployment export.
 - On request, run `python3 <skill-folder>/scripts/export_asset_pack.py <game-folder> --target <deployment-root>` first as a dry run. Add `--apply` only after the printed mappings are accepted.
 - The exporter copies approved game-wise sources into type-based deployment directories and never changes the working source files.
@@ -170,4 +173,4 @@ cd <skill-folder>
 python3 scripts/smoke_test_thumbnail_skill.py
 ```
 
-The smoke test checks prompt and workflow invariants only. It does not replace visual review or user approval.
+The smoke test checks prompt/workflow invariants and runs the candidate-validator regression suite. It does not replace visual review or user approval.

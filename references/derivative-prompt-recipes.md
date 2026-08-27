@@ -55,12 +55,16 @@ Create the 1626 x 588 completed-state banner for [GAME NAME] from the approved d
 
 Composite the approved symbol over the fixed shared completed-state background template. The background is a horizontally uniform dark teal vertical gradient, approximately `#1C272C` at the top, `#0C1B1F` at mid-height, and `#03171C` at the bottom. It is identical across games and must not be recolored from the icon palette. Do not add texture, noise, vignette, spotlight, glow, or generated atmospheric variation.
 
-Translate the approved symbol into a subdued flat tonal overlay. Enlarge it, position it on the right, and crop it intentionally beyond the top, right, or bottom edge while keeping it recognizable. Leave the left side as untouched background for completion UI rendered by the application. Ignore the Hangman completed asset entirely when researching or judging this target.
+Use only the approved symbol's alpha silhouette; do not preserve its game-specific color or felt texture. Render it as a very subtle neutral dark-teal tonal lift over the template so the underlying vertical gradient remains visible through the symbol. A useful reference match is approximately `+8, +7, +7` RGB at full mask opacity. Do not use a flat orange, cyan, or other game-colored fill.
+
+Enlarge the symbol until it materially fills the right half, position it on the right, and crop it intentionally beyond multiple canvas edges where possible while keeping the defining silhouette recognizable. Clip the overlay to the right half so every lossless-source pixel left of the horizontal midpoint remains identical to the bare template; minor WebP encoding differences are acceptable. A small corner badge is incorrect. Ignore the Hangman completed asset entirely when researching or judging this target.
 
 Do not bake in a title, completion message, score, button, badge, logo, watermark, or readable UI label. Do not use a bright icon-tile treatment or detailed gameplay scene.
 ```
 
-Export WebP by default and PNG only when the target asset set requires it.
+Production rule: use `scripts/compose_completed_banner.py` and tune only the symbol scale and position. Image-generation output, manual painting, arbitrary recoloring, and custom replacement compositors are ineligible for this target. Retain a lossless PNG QA source in `iterations/` even when WebP is the only deployment deliverable. Run `scripts/validate_completed_banner.py <lossless-png>` and treat any failure as a hard stop before presentation, approval, promotion, or export.
+
+Export WebP by default. Keep the lossless PNG as a QA/source iteration; promote a canonical PNG only when the target asset set requires it.
 
 ## Your-Turn Background
 

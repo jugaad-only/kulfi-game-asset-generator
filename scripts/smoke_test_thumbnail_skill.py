@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Dry-run checks for the game-thumbnail-generator skill.
 
-This verifies prompt/workflow invariants for multiple current games. It does not
-generate images and does not approve or move assets.
+This verifies prompt/workflow invariants for multiple current games and runs
+synthetic candidate-QA regressions. It does not call image generation, approve,
+or move project assets.
 """
 
 from __future__ import annotations
@@ -246,7 +247,16 @@ def assert_skill_guardrails() -> None:
             "references/colleague-quick-start.md",
             "scripts/init_asset_pack.py",
             "scripts/validate_asset_pack.py",
+            "scripts/validate_candidate.py",
             "scripts/export_asset_pack.py",
+        ],
+        "references/candidate-validation.md": [
+            "Resolve the request to exactly one asset type",
+            "If the user says only `game icon`",
+            "A nonzero exit is a hard stop",
+            "partner_turn_icon",
+            "your_turn_background",
+            "Do not present a failed candidate",
         ],
         "references/prompt-recipes.md": [
             "If the real rule cannot be verified, STOP",
@@ -495,6 +505,18 @@ def assert_asset_pack_tooling() -> None:
             raise AssertionError("export dry run created deployment files")
 
 
+def assert_candidate_validation() -> None:
+    skill_dir = Path(__file__).resolve().parents[1]
+    result = subprocess.run(
+        [sys.executable, str(skill_dir / "scripts/test_candidate_validation.py")],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise AssertionError(f"candidate QA regression failed: {result.stdout}{result.stderr}")
+
+
 def main() -> None:
     for index, case in enumerate(CASES, start=1):
         prompt_3x4 = build_3x4_prompt(case)
@@ -509,6 +531,8 @@ def main() -> None:
     print(f"{len(CASES) + 2}. PASS rules-based guardrails: mechanic verification hard-stop is present.")
     assert_asset_pack_tooling()
     print(f"{len(CASES) + 3}. PASS asset-pack tooling: initialize, validate, reject stray files, and dry-run export.")
+    assert_candidate_validation()
+    print(f"{len(CASES) + 4}. PASS candidate QA: all asset contracts and known failure regressions are enforced.")
     print(f"Checked {len(CASES)} current-game cases. No workspace files moved, generated, or finalized.")
 
 

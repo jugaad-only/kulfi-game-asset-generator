@@ -7,7 +7,7 @@ The workflow is built for a mobile game catalog. It keeps titles outside thumbna
 ## Requirements
 
 - Codex with image generation and web research available
-- Python 3.9 or newer for the included initialization, validation, export, and smoke-test scripts
+- Python 3.9 or newer with Pillow and NumPy for the included initialization, validation, export, and smoke-test scripts
 - A concrete mechanic source for rules-based games: source code, gameplay screenshots, Figma frames, rules, or a written explanation
 
 ## Install
@@ -66,6 +66,16 @@ Drafts and rejected versions stay in the game's `iterations/` directory. Approve
 
 ## Validate and export
 
+Every generated candidate must pass its asset-specific machine QA before visual review or presentation. For example:
+
+```bash
+python3 ~/.codex/skills/game-thumbnail-generator/scripts/validate_candidate.py \
+  daily_game_icon \
+  /path/to/project/game-assets/game-name/iterations/game-name-daily-game-icon-v01.webp
+```
+
+Partner-turn and other icon-derived assets also require `--source` to name the approved daily icon. See `references/candidate-validation.md` for every asset contract and command.
+
 Validate a completed pack:
 
 ```bash
@@ -90,7 +100,7 @@ cd ~/.codex/skills/game-thumbnail-generator
 python3 scripts/smoke_test_thumbnail_skill.py
 ```
 
-The smoke test checks workflow and prompt invariants without generating or moving assets. Visual review and explicit approval remain required.
+The smoke test checks workflow and prompt invariants and runs candidate-QA regression fixtures without calling image generation or moving project assets. Visual review and explicit approval remain required.
 
 ## Repository layout
 
