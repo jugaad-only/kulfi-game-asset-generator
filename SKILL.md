@@ -3,7 +3,7 @@ name: game-thumbnail-generator
 description: Generate, revise, approve, and organize Kulfi mobile game thumbnails, daily game icons, partner-turn icons, your-turn backgrounds, and dependent assets through staged approval gates.
 ---
 
-# Game Thumbnail Generator
+# Kulfi Game Asset Generator
 
 Use this skill when the user asks to generate, revise, review, approve, finalize, document, or organize mobile game thumbnails or their dependent daily-game icon assets for the Kulfi catalog.
 

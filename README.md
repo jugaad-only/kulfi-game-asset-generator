@@ -1,4 +1,4 @@
-# Game Thumbnail Generator
+# Kulfi Game Asset Generator
 
 A Codex skill for creating consistent mobile-game asset packs through explicit approval stages. It covers 3:4 and 16:9 thumbnails, felt daily-game icons, partner-turn icons, info-page logos, completed-state banners, and your-turn backgrounds.
 
@@ -16,7 +16,7 @@ Clone the repository directly into your Codex skills directory:
 
 ```bash
 mkdir -p ~/.codex/skills
-git clone https://github.com/jugaad-only/game-thumbnail-generator.git \
+git clone https://github.com/jugaad-only/kulfi-game-asset-generator.git \
   ~/.codex/skills/game-thumbnail-generator
 ```
 
