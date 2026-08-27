@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game Asset Pack Generator"
+  short_description: "Create complete Kulfi game asset packs"
+  default_prompt: "Use $game-thumbnail-generator to initialize a game asset pack from its verified mechanic source and guide me through each approval stage."

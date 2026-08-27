@@ -1,0 +1,33 @@
+# macOS and editor files
+.DS_Store
+**/.DS_Store
+*.swp
+*.tmp
+
+# Local browser/test artifacts
+.playwright-cli/
+
+# Local production workspace and generated outputs
+converted-assets/
+finalised-assets/
+finalised-assets-16x9/
+game-assets/
+non-final-assets/
+output/
+outputs/
+
+# Packaged builds and backups; source lives in game-thumbnail-generator/
+dist/
+
+# Workspace-only notes and instructions
+AGENTS.md
+FINALIZED_ASSETS.md
+MISTAKES_AND_LEARNINGS.md
+game-tile-thumbnail-brief.md
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
