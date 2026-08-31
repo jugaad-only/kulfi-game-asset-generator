@@ -57,6 +57,19 @@ def daily_icon(path: Path) -> None:
 
 
 def partner_pair(webp: Path, svg: Path) -> None:
+    image = Image.new("RGBA", (84, 84), (0, 0, 0, 0))
+    fill = Image.new("RGBA", (84, 84), (142, 157, 177, 255))
+    image.paste(fill, (0, 0), ring_mask(84))
+    image.save(webp, "WEBP", lossless=True)
+    svg.write_text(
+        """<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+<path fill="#8E9DB1" fill-rule="evenodd" d="M14 3a11 11 0 1 0 0 22 11 11 0 1 0 0-22zm0 7a4 4 0 1 1 0 8 4 4 0 1 1 0-8z"/>
+</svg>
+"""
+    )
+
+
+def bad_partner_palette(webp: Path, svg: Path) -> None:
     image = Image.new("RGBA", (84, 84), (184, 116, 69, 0))
     image.putalpha(ring_mask(84))
     image.save(webp, "WEBP", lossless=True)
@@ -121,6 +134,8 @@ def main() -> None:
         completed = root / "completed.png"
         bad_daily = root / "bad-checkerboard.png"
         bad_partner = root / "bad-partner.png"
+        bad_palette = root / "bad-partner-palette.webp"
+        bad_palette_svg = root / "bad-partner-palette.svg"
 
         daily_icon(daily)
         partner_pair(partner, svg)
@@ -128,6 +143,7 @@ def main() -> None:
         your_turn(turn)
         bad_checkerboard(bad_daily)
         bad_partner_background(bad_partner)
+        bad_partner_palette(bad_palette, bad_palette_svg)
 
         portrait = Image.new("RGB", (600, 800), (40, 80, 120))
         ImageDraw.Draw(portrait).ellipse((120, 180, 520, 580), fill=(230, 150, 60))
@@ -175,8 +191,18 @@ def main() -> None:
             str(svg),
             should_pass=False,
         )
+        # Regression: correct geometry with the wrong color or dirty transparent RGB must fail.
+        run(
+            "partner_turn_icon",
+            bad_palette,
+            "--source",
+            str(daily),
+            "--svg",
+            str(bad_palette_svg),
+            should_pass=False,
+        )
 
-    print("PASS candidate QA: all seven asset contracts and both failure regressions behaved correctly")
+    print("PASS candidate QA: all seven asset contracts and three failure regressions behaved correctly")
 
 
 if __name__ == "__main__":

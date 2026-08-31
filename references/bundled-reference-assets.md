@@ -13,7 +13,8 @@ Use these assets as visual family references only. Do not copy another game's ex
 - `assets/style-references/approved-partner-turn-icons/` - approved partner-turn icon SVG/WebP references.
 - `assets/style-references/approved-info-page-square-logos/` - approved info-page square logo references.
 - `assets/style-references/approved-completed-banners/` - approved completed-state banner references.
-- `assets/style-references/approved-your-turn-backgrounds/` - approved your-turn background references.
+- `assets/style-references/approved-your-turn-backgrounds/` - approved your-turn background references; Hangman is excluded.
+- `assets/style-references/rejected-your-turn-backgrounds/` - quarantined legacy outliers retained only for inventory traceability; never use these for generation or QA.
 
 ## How To Choose References
 
@@ -23,6 +24,6 @@ Use these assets as visual family references only. Do not copy another game's ex
 - For a partner-turn icon, use the approved daily icon plus `approved-partner-turn-icons/`.
 - For an info-page square logo, use the approved daily icon plus `approved-info-page-square-logos/`.
 - For a completed-state banner, use the approved daily icon plus `approved-completed-banners/`; still ignore Hangman as a completed-state style reference where the completed-state guide says to.
-- For a your-turn background, use the approved daily icon plus `approved-your-turn-backgrounds/`.
+- For a your-turn background, use the approved daily icon plus `approved-your-turn-backgrounds/`; never use the quarantined Hangman card.
 
 Do not use `same-game-only` references for unrelated games. Never use a `rejected` reference for generation or QA.

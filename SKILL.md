@@ -35,15 +35,15 @@ Use this skill when the user asks to generate, revise, review, approve, finalize
 Apply these rules to every `daily_game_icon`. Later icon-derived assets must preserve the approved symbol and silhouette while following their own target-specific material treatment.
 
 - Use one dominant **filled felt silhouette**, not a miniature illustration or layered emblem.
-- Use **exactly one visible color** across the entire filled symbol. No second shade or value is allowed.
-- The felt texture must be subtle, matte, and uniform. Texture may show fibers or soft cut edges, but it must not create highlights, shadows, depth modeling, seams, or a second color region.
+- Use one dominant felt color across the filled symbol. A subtle stitched seam may use tonal thread from the same color family, but it must not introduce a contrasting accent or split the symbol into layered color regions.
+- The felt texture must be matte and tactile, with visible fibers, soft cut edges, and a restrained stitched seam following the outer contour and any major internal opening. The seam must remain subordinate to the silhouette and must not create highlights, shadows, bevels, or depth modeling.
 - Use a **genuinely transparent canvas** around the symbol. Never bake in a checkerboard, white square, colored tile, glow, drop shadow, border, or background plate.
 - Treat the filled symbol as positive space and the transparent canvas as negative space. Keep balanced breathing room around the full silhouette and do not crop recognition-critical edges.
 - Make the **outer contour** carry recognition, while including one controlled area of internal negative space. Use one broad, simple opening that supports recognition and balance; decorative holes, many small cutouts, and lace-like detail are not allowed.
-- **Minimal detail means fewer details, not smaller details.** Use only a few large, broad forms. Remove a feature completely instead of shrinking it into a tiny dot, petal, stitch, bead, line, or ornament.
+- **Minimal detail means fewer details, not smaller details.** Use only a few large, broad forms. Preserve the family-defining perimeter stitching, but remove tiny decorative stitches, dots, petals, beads, lines, and ornaments.
 - Minimal does not mean featureless. Preserve the small set of large functional cues that makes the object unmistakable, such as a rakhi's medallion, tying cords, broad knots, and tasselled ends. Reject an over-simplified shape that becomes generic or loses the subject.
 - Do not use intricate rosettes, mandalas, lattices, dotted borders, repeated micro-shapes, fine linework, or dense scalloping. A reference may contain these, but the felt icon must simplify them into the outer silhouette plus one broad internal opening.
-- Remove faces, pupils, mouths, highlights, beads, embroidery, stitching, outlines, nested shapes, and surface decoration unless the verified game symbol would be unrecognizable without one essential feature. Any exception must still survive the one-color binary-mask test.
+- Remove faces, pupils, mouths, highlights, beads, decorative embroidery, dense interior stitchwork, outlines, nested shapes, and unrelated surface decoration unless the verified game symbol requires one essential feature. Perimeter stitching is expected as part of the Kulfi felt treatment. The underlying filled silhouette must still survive the binary-mask test when the stitches are ignored.
 - Do not include the game title, letters used as labels, promotional copy, logo lockups, watermarks, or readable UI text. A mark or letter is allowed only when it is an indispensable part of the verified game symbol.
 - Check the icon as a two-state mask: **filled felt or transparent**. It must remain balanced and recognizable at the actual mobile display size and when reduced further.
 - Check semantic recognition with the title and context hidden: `Does this really look like [GAME NAME]?` Reject a polished icon that first reads as a badge, mascot, token, bell, plate, unrelated prop, or another object.
@@ -126,8 +126,8 @@ Complete stages 1-3 in order. After the `daily_game_icon` is approved, the partn
 ### 4A. Create `daily_games_partner_turn_icons`
 
 1. Read [references/bundled-reference-assets.md](references/bundled-reference-assets.md), [references/partner-turn-icon-references.md](references/partner-turn-icon-references.md), and the Partner-Turn Icon recipe in [references/derivative-prompt-recipes.md](references/derivative-prompt-recipes.md) before creating the partner-turn derivative.
-2. Use the approved daily icon as the source of truth. Preserve its symbol, silhouette, monochrome palette, and positive/negative space while simplifying it into the flat vector treatment used by this target.
-3. Export matching SVG and WebP candidates, then run `validate_candidate.py partner_turn_icon <candidate.webp> --source <approved-daily-icon.webp> --svg <candidate.svg>`. Stop on failure. Only after it passes, review with the Partner-Turn Icon Gate in [references/quality-gates.md](references/quality-gates.md) and request explicit user approval before finalizing.
+2. Use the approved daily icon as the source of truth. Preserve its symbol, silhouette, and positive/negative space while simplifying it into the flat vector treatment used by this target. Use the fixed shared UI-chrome fill `#8E9DB1` instead of inheriting the daily icon's game-specific color.
+3. Export matching SVG and WebP candidates, then run `validate_candidate.py partner_turn_icon <candidate.webp> --source <approved-daily-icon.webp> --svg <candidate.svg>`. This includes the fixed-palette and transparent-RGB checks. Stop on failure. Only after it passes, review with the Partner-Turn Icon Gate in [references/quality-gates.md](references/quality-gates.md) and request explicit user approval before finalizing.
 
 ### 4B. Create `daily_games_info_page_square_logos`
 
@@ -147,7 +147,7 @@ Complete stages 1-3 in order. After the `daily_game_icon` is approved, the partn
 
 1. Start when the corresponding `daily_game_icon` is explicitly approved. This branch does not depend on the partner-turn icon, info-page square logo, or completed-state asset.
 2. Read [references/bundled-reference-assets.md](references/bundled-reference-assets.md), [references/your-turn-background-references.md](references/your-turn-background-references.md), and the Your-Turn Background recipe in [references/derivative-prompt-recipes.md](references/derivative-prompt-recipes.md) before creating the derivative.
-3. Use the approved daily icon as the source of truth. Place a small, crisp felt icon on the right over a pale same-family background, with a much larger low-contrast version of the same silhouette acting as a cropped watermark behind it. Keep the left side quiet for application-rendered turn UI.
+3. Use the approved daily icon as the source of truth. Place a small, crisp felt icon in the upper-right over a pale same-family background, with its visual center approximately 25%-38% down the canvas. Never vertically center the foreground icon. Place a much larger low-contrast version of the same silhouette behind it as a cropped watermark aligned to the same upper-right cluster. Keep the left side quiet for application-rendered turn UI. Ignore the legacy Hangman your-turn background entirely; it is a rejected outlier and not a valid reference.
 4. Export an opaque 813 x 420 WebP unless the project specifies a 2x equivalent, then run `validate_candidate.py your_turn_background <candidate.webp> --source <approved-daily-icon.webp>`. Stop on failure. Only after it passes, review with the Your-Turn Background Gate in [references/quality-gates.md](references/quality-gates.md) and request explicit user approval before finalizing.
 
 ### 5. Create Remaining Icon-Dependent Assets

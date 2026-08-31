@@ -250,6 +250,7 @@ def validate_partner_svg(path: Optional[Path], errors: list[str]) -> None:
 
 
 def validate_partner(
+    path: Path,
     image: Image.Image,
     source: Optional[Path],
     svg: Optional[Path],
@@ -272,6 +273,21 @@ def validate_partner(
     if len(pixels) and float(pixels.astype(np.float32).std(axis=0).mean()) > 8.0:
         errors.append("partner-turn symbol is not a flat single-color treatment")
     validate_partner_svg(svg, errors)
+    if svg is not None and svg.is_file() and path.is_file():
+        palette_validator = Path(__file__).with_name("validate_partner_turn_palette.py")
+        result = subprocess.run(
+            [sys.executable, str(palette_validator), str(path), "--svg", str(svg)],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode != 0:
+            messages = [
+                line.removeprefix("FAIL: ")
+                for line in result.stdout.splitlines()
+                if line.startswith("FAIL: ")
+            ]
+            errors.extend(messages or [result.stderr.strip() or "partner-turn palette validator failed"])
 
 
 def background_color(image: Image.Image) -> np.ndarray:
@@ -375,7 +391,7 @@ def main() -> int:
             elif args.asset_type == "daily_game_icon":
                 validate_daily_icon(image, errors)
             elif args.asset_type == "partner_turn_icon":
-                validate_partner(image, args.source, args.svg, errors)
+                validate_partner(args.candidate, image, args.source, args.svg, errors)
             elif args.asset_type == "info_page_square_logo":
                 validate_info_square(image, args.source, errors)
             elif args.asset_type == "your_turn_background":

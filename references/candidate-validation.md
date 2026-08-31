@@ -13,7 +13,7 @@ Resolve the request to exactly one asset type before reading a recipe or generat
 | Primary portrait catalog tile | `thumbnail_3x4` | Opaque 3:4 artwork |
 | Approved landscape catalog derivative | `thumbnail_16x9` | Opaque 16:9 artwork |
 | Daily game icon | `daily_game_icon` | 287 x 287 one-color felt symbol on transparency |
-| Partner-turn icon | `partner_turn_icon` | One 28 x 28 SVG plus equivalent 84 x 84 transparent WebP |
+| Partner-turn icon | `partner_turn_icon` | One 28 x 28 SVG plus equivalent 84 x 84 transparent WebP, both using fixed UI chrome `#8E9DB1` with cleared RGB beneath fully transparent WebP pixels |
 | Info-page square logo | `info_page_square_logo` | 1024 x 1024 opaque square with centered felt symbol |
 | Completed-state banner | `completed` | 1626 x 588 lossless PNG QA source using the fixed dark-teal vertical gradient: `#1C272C` top, `#0C1B1F` middle, and `#03171C` bottom; protected left half; subtle neutral symbol lift near `+8, +7, +7` RGB; oversized right-side crop |
 | Your-turn background | `your_turn_background` | 813 x 420 opaque wide UI background |
@@ -38,4 +38,4 @@ After a machine-QA pass, run the matching visual gate in `quality-gates.md`. Bot
 
 ## Coverage Boundary
 
-Machine QA catches contract violations such as a baked checkerboard, missing alpha, wrong dimensions, an opaque wide layout submitted as partner-turn, multiple disconnected symbols, excessive color variation, and a derivative whose mask materially differs from the approved daily icon. Human visual QA still decides subject recognition, mechanic honesty, felt quality, composition, cultural accuracy, text/watermarks, and family resemblance.
+Machine QA catches contract violations such as a baked checkerboard, missing alpha, wrong dimensions, an opaque wide layout submitted as partner-turn, an incorrect partner-turn palette or dirty transparent RGB, multiple disconnected symbols, excessive color variation, and a derivative whose mask materially differs from the approved daily icon. Human visual QA still decides subject recognition, mechanic honesty, felt quality, composition, cultural accuracy, text/watermarks, and family resemblance.

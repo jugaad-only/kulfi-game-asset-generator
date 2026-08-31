@@ -65,7 +65,9 @@ The following CDN families are accepted as asset-class references. Their exact p
 | Completed state | `https://asset-data.kulfiapp.com/media/home_game_v2/daily_games_completed/` | `completed-state-references.md` |
 | Your-turn background | `https://asset-data.kulfiapp.com/media/home_game_v2/daily_game_your_turn_bg/` | `your-turn-background-references.md` |
 
-Existing daily icons include legacy complexity and are accepted as production-family material references, not as permission to repeat faces, multiple shades, tiny cutouts, or decorative stitching. New icons must still pass the stricter Felt Icon Rules and binary-mask gate in `SKILL.md`.
+Existing daily icons define the production-family felt treatment, including their restrained perimeter stitching. Use that stitching on new icons while avoiding faces, multiple color regions, tiny cutouts, contrasting thread, decorative embroidery, and dense interior stitchwork. New icons must still pass the Felt Icon Rules and binary-mask gate in `SKILL.md`.
+
+The Hangman your-turn background is `rejected`. Keep its CDN URL only for inventory traceability; do not open, sample, cite, compare against, or use it for generation or QA. It is not part of the accepted your-turn visual family.
 
 ## Selection Rule
 

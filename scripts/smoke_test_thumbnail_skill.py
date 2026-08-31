@@ -216,7 +216,8 @@ def assert_skill_guardrails() -> None:
             "focused internet reference pass",
             "Record URLs, local screenshot paths, search terms, author/style/license information",
             "Felt Icon Rules",
-            "exactly one visible color",
+            "one dominant felt color",
+            "subtle stitched seam",
             "genuinely transparent canvas",
             "Never bake in a checkerboard",
             "filled felt or transparent",
@@ -249,12 +250,15 @@ def assert_skill_guardrails() -> None:
             "scripts/validate_asset_pack.py",
             "scripts/validate_candidate.py",
             "scripts/export_asset_pack.py",
+            "#8E9DB1",
         ],
         "references/candidate-validation.md": [
             "Resolve the request to exactly one asset type",
             "If the user says only `game icon`",
             "A nonzero exit is a hard stop",
             "partner_turn_icon",
+            "#8E9DB1",
+            "cleared RGB beneath fully transparent WebP pixels",
             "your_turn_background",
             "Do not present a failed candidate",
         ],
@@ -321,7 +325,8 @@ def assert_skill_guardrails() -> None:
         ],
         "references/daily-game-icon-references.md": [
             "tactile felt-art construction",
-            "exactly one visible color",
+            "one dominant color",
+            "subtle stitched perimeter",
             "one filled felt silhouette",
             "genuine transparency for the surrounding canvas",
             "binary-mask test",
@@ -341,6 +346,8 @@ def assert_skill_guardrails() -> None:
         ],
         "references/partner-turn-icon-references.md": [
             "approved daily icon is the source of truth",
+            "#8E9DB1",
+            "Clear RGB values beneath fully transparent WebP pixels",
             "daily_games_partner_turn_icons/chess.svg",
             "daily_games_partner_turn_icons/zip_together.webp",
         ],
@@ -364,6 +371,9 @@ def assert_skill_guardrails() -> None:
         "references/your-turn-background-references.md": [
             "813 x 420",
             "left 55%",
+            "upper-right",
+            "25%-38%",
+            "Ignore the Hangman your-turn background entirely",
             "faint oversized watermark",
             "daily_game_your_turn_bg/chess.webp",
             "daily_game_your_turn_bg/poople_your_turn_bg.webp",
@@ -517,6 +527,37 @@ def assert_candidate_validation() -> None:
         raise AssertionError(f"candidate QA regression failed: {result.stdout}{result.stderr}")
 
 
+def assert_partner_turn_palette_tooling() -> None:
+    skill_dir = Path(__file__).resolve().parents[1]
+    validator = skill_dir / "scripts/validate_partner_turn_palette.py"
+    with tempfile.TemporaryDirectory(prefix="kulfi-partner-turn-") as temp:
+        from PIL import Image
+
+        fixture_dir = Path(temp)
+        webp = fixture_dir / "fixture.webp"
+        svg = fixture_dir / "fixture.svg"
+        image = Image.new("RGBA", (8, 8), (0, 0, 0, 0))
+        for y in range(2, 6):
+            for x in range(2, 6):
+                image.putpixel((x, y), (142, 157, 177, 255))
+        image.save(webp, format="WEBP", lossless=True, exact=True)
+        svg.write_text(
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8">'
+            '<path fill="#8E9DB1" d="M2 2h4v4H2z"/></svg>\n'
+        )
+        validation = subprocess.run(
+            [sys.executable, str(validator), str(webp), "--svg", str(svg)],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if validation.returncode != 0:
+            raise AssertionError(
+                f"partner-turn palette validator rejected a valid fixture: "
+                f"{validation.stdout}{validation.stderr}"
+            )
+
+
 def main() -> None:
     for index, case in enumerate(CASES, start=1):
         prompt_3x4 = build_3x4_prompt(case)
@@ -533,6 +574,8 @@ def main() -> None:
     print(f"{len(CASES) + 3}. PASS asset-pack tooling: initialize, validate, reject stray files, and dry-run export.")
     assert_candidate_validation()
     print(f"{len(CASES) + 4}. PASS candidate QA: all asset contracts and known failure regressions are enforced.")
+    assert_partner_turn_palette_tooling()
+    print(f"{len(CASES) + 5}. PASS partner-turn palette tooling: deterministic SVG/WebP fixture matches fixed UI chrome.")
     print(f"Checked {len(CASES)} current-game cases. No workspace files moved, generated, or finalized.")
 
 

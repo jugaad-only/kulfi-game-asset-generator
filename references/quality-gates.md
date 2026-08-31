@@ -52,22 +52,24 @@ Run the matching command in `candidate-validation.md` first. Use this human/visu
 - For a literal game name, the outer silhouette reads first as the named object or action rather than as a generic badge, mascot, token, or unrelated prop.
 - The candidate preserves the two or three silhouette cues that make the named object distinctive.
 - Both independent checks pass: the outer silhouette reads as the game subject, and one broad internal negative-space opening is clearly present.
-- The icon is one filled felt silhouette in exactly one visible color. There are no lighter/darker shades, gradients, highlights, shadows, outlines, layered color regions, or illustrative interior detail.
+- The icon is one filled felt silhouette in one dominant color, with a subtle tonal stitched seam following the outer contour and any major internal opening. There are no contrasting threads, gradients, highlights, shadows, bevels, layered color regions, or illustrative interior detail.
 - The surrounding canvas is genuinely transparent. The filled symbol and open canvas form balanced positive and negative space at the final mobile-icon size.
 - The outer silhouette carries recognition and the icon includes one broad, controlled internal negative-space opening that improves recognition or balance. It does not contain many small or decorative cutouts.
-- Detail was simplified by removal, not miniaturization. The icon uses only a few large forms and contains no tiny dots, petals, stitches, beads, fine lines, lattices, ornamental patterns, or repeated micro-shapes.
+- Detail was simplified by removal, not miniaturization. The icon uses only a few large forms. Family-defining perimeter stitching is present, while decorative embroidery, dense interior stitches, tiny dots, petals, beads, fine lines, lattices, ornamental patterns, and repeated micro-shapes are absent.
 - Simplification did not remove the few large functional cues needed for recognition; the icon is minimal without becoming plain, generic, or featureless.
 - The icon passes the binary-mask test: reduced to one solid fill on transparency, its silhouette and identity remain clear.
-- Felt grain does not create a second visible shade, and internal detail does not collapse into noise.
+- Felt grain and tonal perimeter stitching remain tactile and legible without becoming a contrasting outline or collapsing into noise.
 - No title, word, wordmark, promotional copy, logo, watermark, or readable UI label appears inside the icon.
 - The candidate was compared with the provided Kulfi daily game icon reference set for family consistency.
 - The exact candidate receives explicit approval before it becomes the source for later derivatives.
 
 ## Partner-Turn Icon Gate
 
-- A saved `validate_candidate.py partner_turn_icon` report passes for the exact WebP/SVG pair and approved daily-icon source before the files are shown.
+- A saved `validate_candidate.py partner_turn_icon` report passes for the exact WebP/SVG pair and approved daily-icon source before the files are shown. This includes the fixed-palette and transparent-RGB checks.
 - The corresponding daily game icon is explicitly approved and finalized.
-- The derivative preserves the approved symbol, silhouette, monochrome color family, and positive/negative space while simplifying the felt source into a flat single-color vector treatment.
+- The derivative preserves the approved symbol, silhouette, and positive/negative space while simplifying the felt source into a flat single-color vector treatment.
+- Both SVG and WebP use the fixed shared UI-chrome fill `#8E9DB1`; inheriting the daily icon's game-specific color fails this gate.
+- Fully transparent WebP pixels have cleared RGB values.
 - Any compositional change is justified by the partner-turn UI role and does not create a new visual identity.
 - It remains recognizable and uncluttered at its actual display size.
 - SVG and WebP exports are visually equivalent when both formats are required.
@@ -110,9 +112,11 @@ Run the matching command in `candidate-validation.md` first. Use this human/visu
 - The corresponding daily game icon is explicitly approved and finalized; no other derivative asset is a prerequisite.
 - The asset is an opaque 813 x 420 WebP unless the project specifies a 2x equivalent at the same aspect ratio.
 - The small foreground felt icon preserves the approved symbol, silhouette, color family, material treatment, and positive/negative space.
+- The small foreground icon is positioned in the upper-right, with its visual center approximately 25%-38% down the canvas. A vertically centered or lower-right foreground icon fails this gate.
 - A much larger version of the same silhouette appears as a very faint, low-contrast, intentionally cropped watermark behind the foreground icon.
 - The foreground icon and watermark remain on the right; roughly the left 55% stays visually quiet for application-rendered turn UI.
 - The background is pale and belongs to the approved icon's color family. It does not compete with the foreground icon or reduce UI readability.
+- Hangman was excluded entirely from your-turn reference selection and QA.
 - No title, turn message, player name, button, badge, logo, watermark text, or readable UI label is baked into the asset.
 - The exact your-turn background candidate receives explicit approval before final placement.
 
@@ -163,4 +167,4 @@ Reject or revise when any of these appear:
 - An info-page square logo is off-center, tightly cropped, uses a mismatched background hue, or introduces an unapproved symbol.
 - A completed-state asset is bright, inherits the daily icon's game-specific color, uses a flat opaque symbol fill, centers the symbol, changes any left-half template pixel, presents a small corner badge, crops the symbol into an unrecognizable shape, lacks a lossless QA source, bypasses the deterministic compositor, or fails the completed-banner validator.
 - A completed-state background is recolored per game, varies horizontally, adds texture or lighting effects, or uses the Hangman asset as a reference.
-- A your-turn background fills the quiet left UI area, omits the faint oversized watermark, moves the crisp felt icon away from the right, uses a dark completed-state treatment, or introduces a symbol not present in the approved daily icon.
+- A your-turn background fills the quiet left UI area, omits the faint oversized watermark, vertically centers the crisp icon instead of placing it upper-right, moves it away from the right, uses a dark completed-state treatment, introduces a symbol not present in the approved daily icon, or uses the rejected Hangman card as a reference.

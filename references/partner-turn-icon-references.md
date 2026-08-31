@@ -6,9 +6,11 @@ Read this file only after the corresponding `daily_game_icon` is explicitly appr
 
 - The approved daily icon is the source of truth, not merely an inspiration.
 - Preserve the game symbol, silhouette, monochrome color family, and positive/negative space while translating the felt source into the reference family's simplified flat vector treatment.
+- Partner-turn color is a target-specific exception: use the fixed shared UI-chrome fill `#8E9DB1` for every game. Do not inherit the daily icon's game-specific color.
 - Adapt only what is necessary for the partner-turn UI role.
 - Keep SVG and WebP versions visually equivalent when both are required.
 - Do not introduce titles, words, logos, promotional copy, watermarks, or a new visual identity.
+- Clear RGB values beneath fully transparent WebP pixels so previews cannot show a misleading colored rectangle.
 
 ## Reference Set
 

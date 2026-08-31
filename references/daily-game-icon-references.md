@@ -6,15 +6,15 @@ Read this file only after all requested thumbnail formats for the game are appro
 
 - Use the approved thumbnail and verified mechanic to select one recognizable symbol.
 - Match the reference family's tactile felt-art construction.
-- Use one filled felt silhouette in exactly one visible color. Do not introduce lighter or darker shades, gradients, highlights, shadows, outlines, layered color regions, or illustrative interior detail.
+- Use one filled felt silhouette in one dominant color. Add the approved family's subtle stitched perimeter using tonal thread from the same color family. Do not introduce contrasting thread, gradients, highlights, shadows, bevels, layered color regions, or illustrative interior detail.
 - Use genuine transparency for the surrounding canvas. The filled symbol is the positive space; the open canvas around it is the negative space.
 - Let the outer silhouette carry recognition and include one controlled area of internal negative space. Use one broad, simple opening that supports recognition and balance; do not add decorative holes or many small cutouts.
-- Minimal detail means fewer, larger forms rather than the same complexity at a smaller scale. Delete tiny dots, petals, stitches, beads, repeated scallops, fine lines, and ornamental patterns.
+- Minimal detail means fewer, larger forms rather than the same complexity at a smaller scale. Preserve the family-defining perimeter seam, but delete decorative stitches, tiny dots, petals, beads, repeated scallops, fine lines, and ornamental patterns.
 - Do not simplify away the subject's large functional identity cues. A minimal icon may retain a few broad knots, cords, handles, openings, or ends when those forms are what distinguish the object from a generic badge or shape.
 - Do not translate an intricate Flaticon or craft reference literally. Reduce it to the subject's outer contour and one broad internal negative-space opening.
-- Keep the detail budget minimal. Do not render faces, pupils, mouths, surface decoration, tiny stitches, beads, or nested layers unless one of those forms is the game symbol itself.
+- Keep the detail budget minimal. Do not render faces, pupils, mouths, unrelated surface decoration, decorative embroidery, dense interior stitchwork, beads, or nested layers unless one of those forms is the game symbol itself.
 - Apply the binary-mask test before approval: when the icon is reduced to one solid fill on transparency, it must remain balanced and recognizable at small mobile size.
-- Felt grain is the only surface treatment allowed. It must remain uniform and must not create a second visible shade or value region.
+- Felt grain and the restrained stitched perimeter are the allowed material treatments. Use matte non-woven nap, soft fibers, and subtly fuzzy cut edges. The seam must remain tonal, evenly spaced, and subordinate to the silhouette rather than becoming a contrasting outline.
 - Do not include a title, word, wordmark, promotional copy, logo, watermark, or readable UI label.
 - These references define the visual system; do not copy another game's symbol for a new game.
 
