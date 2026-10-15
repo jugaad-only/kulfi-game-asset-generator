@@ -15,7 +15,7 @@ For 16:9 and icon-derived assets, list the approved canonical files from the sam
 Under `Generation Prompts`, add a compact record:
 
 ```markdown
-- **Game Name:** Generated from scratch or revised from `[source path]`. Final asset uses [dominant subject/mechanic], no title/wordmark/promotional copy/logo/watermark/readable UI label, quiet bottom-left, and [asset type] crop-safe composition. Source iteration: `game-assets/<game-slug>/iterations/<versioned-file>`. Prompt record: `game-assets/<game-slug>/prompt.md`. Tool: [model/tool]. Approved date: YYYY-MM-DD.
+- **Game Name:** Generated from scratch or revised from `[source path]`. Final asset uses [dominant subject/mechanic], no title/wordmark/promotional copy/logo/watermark/readable UI label, quiet bottom-left when required by the asset format, and [asset type] crop-safe composition. Source iteration: `game-assets/<game-slug>/iterations/<versioned-file>`. Prompt record: `game-assets/<game-slug>/prompt.md`. Tool: [model/tool]. Approved date: YYYY-MM-DD.
 ```
 
 ## Approval Boundary

@@ -21,6 +21,7 @@ Use this skill when the user asks to generate, revise, review, approve, finalize
 - Run a name-recognition QA before presenting any daily icon: hide the title and ask, `Does this really look like [GAME NAME]?` For a literal object or action name, reject any silhouette that reads more strongly as a generic badge, mascot, unrelated prop, or another object.
 - Before visual generation, run a focused internet reference pass unless the user explicitly opts out or browsing is unavailable. Use real-world or category references to verify recognition cues and separate visual references for material or composition inspiration. Record the source URLs and distilled takeaways in `source-notes.md`; never copy one reference's exact artwork, branding, or proprietary character design.
 - Keep all working and approved assets for one game under `game-assets/<game-slug>/`. Approved files live at the game-folder root; every draft, rejected version, contact sheet, and replaced final lives in that game's single `iterations/` subfolder.
+- When a production game-manifest record exists, use its user-facing **Game** display name as the canonical local name and derive the folder slug from that display name. Keep internal manifest keys and legacy export basenames only as technical identifiers. The production manifest, not local folder state or `FINALIZED_ASSETS.md`, determines whether a game is finalized. Use [references/manifest-game-map.md](references/manifest-game-map.md) for the current local mapping.
 - Type-based folders are deployment exports only. Generate and review from the game-wise working folder so all references for one game remain together.
 - Treat `asset-pack.json` as the portable stage and approval record. Change an asset to `approved` only after explicit user approval; use `not-required` only when the project does not need that asset.
 - If the user asks for both ratios in one request, still produce or present the 3:4 candidate first and wait for explicit approval before making the 16:9 derivative.
@@ -57,13 +58,13 @@ Apply these rules to every `daily_game_icon`. Later icon-derived assets must pre
 - Do not place the game name, title, title wordmark, promotional copy, store logo, watermark, signature, or readable UI label inside the artwork.
 - The app displays the game name separately below the thumbnail.
 - Use one dominant subject, object, character, puzzle piece, vehicle, or gameplay action.
-- Keep the bottom-left area visually quiet but not empty. Use only small, low-contrast background details there, such as stitching, fabric folds, loose puzzle pieces, paper shapes, crumbs, tiny leaves, or subtle material texture.
-- Do not place the primary subject, key gameplay interaction, readable text, or dense prop cluster in the bottom-left area.
-- Bias the focal point toward the center, upper area, or right side.
+- For 3:4 and 16:9 thumbnails, keep the bottom-left area visually quiet but not empty. Use only small, low-contrast background details there, such as stitching, fabric folds, loose puzzle pieces, paper shapes, crumbs, tiny leaves, or subtle material texture.
+- For 3:4 and 16:9 thumbnails, do not place the primary subject, key gameplay interaction, readable text, or dense prop cluster in the bottom-left area.
+- For 3:4 and 16:9 thumbnails, bias the focal point toward the center, upper area, or right side. The 1:1 Daily Activity tile is exempt from these bottom-left and focal-position constraints.
 - Ensure strong foreground/background separation, a readable silhouette, and one dominant color identity.
 - Preserve mechanic honesty: puzzle, word, choice, racing, action, or social mechanics must not be visually misleading.
 - For puzzle, board, word, route, grid, or rules-based games, do not generate from a guessed mechanic. Verify the actual rule system from source files, screenshots, gameplay notes, Figma, or user-provided explanation before writing the prompt. If no source is available, ask for one and stop.
-- User special requests, such as specific words, colors, props, or slang, may only be incorporated when they still obey the verified game rules, no-title/no-promo constraint, and quiet lower-left composition rule. For word/puzzle games, requested words must be valid board content, not decorative copy.
+- User special requests, such as specific words, colors, props, or slang, may only be incorporated when they still obey the verified game rules, no-title/no-promo constraint, and any composition rules that apply to the target format. For word/puzzle games, requested words must be valid board content, not decorative copy.
 
 ## Revision And Scene Discipline
 

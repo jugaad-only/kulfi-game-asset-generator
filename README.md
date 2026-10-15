@@ -1,8 +1,10 @@
 # Kulfi Game Asset Generator
 
-A Codex skill for creating consistent mobile-game asset packs through explicit approval stages. It covers 3:4 and 16:9 thumbnails, felt daily-game icons, partner-turn icons, info-page logos, completed-state banners, and your-turn backgrounds.
+A Codex skill for creating consistent mobile-game asset packs through explicit approval stages. It covers 3:4 and 16:9 thumbnails, 1:1 Daily Activity tiles, felt daily-game icons, partner-turn icons, info-page logos, completed-state banners, and your-turn backgrounds.
 
-The workflow is built for a mobile game catalog. It keeps titles outside thumbnail artwork, verifies rules-based mechanics before generation, preserves a quiet bottom-left composition area, and treats each approved asset as the source of truth for its derivatives.
+The workflow is built for a mobile game catalog. It keeps titles outside thumbnail artwork, verifies rules-based mechanics before generation, preserves a quiet bottom-left composition area for 3:4 and 16:9 thumbnails, and treats each approved asset as the source of truth for its derivatives. The 1:1 Daily Activity tile is exempt from the quiet bottom-left rule.
+
+For production games, use the user-facing **Game** name from the [Kulfiverse production manifest](https://verse.kulfiapp.com/game-manifest). Internal manifest keys and legacy implementation names remain technical identifiers only. The production manifest is authoritative for finalization; local folders and registries are working records.
 
 ## Requirements
 

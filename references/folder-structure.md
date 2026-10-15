@@ -11,6 +11,7 @@ All references and deliverables for one game stay together. A task is incomplete
 |-- <game-slug>-thumbnail-3x4.png
 |-- <game-slug>-thumbnail-3x4.webp
 |-- <game-slug>-thumbnail-16x9.webp
+|-- <game-slug>-thumbnail-1x1.webp      # Daily Activity tile when required
 |-- <game-slug>-daily-game-icon.webp
 |-- <game-slug>-partner-turn-icon.svg
 |-- <game-slug>-partner-turn-icon.webp
@@ -60,6 +61,7 @@ Type-based folders such as `daily_games_icon/` or `daily_games_completed/` are d
 ## Naming And Approval
 
 - Use one lowercase game slug consistently.
+- Derive the slug from the production manifest's user-facing **Game** display name when that record exists. Use internal keys such as `POTATO_GOLF` or legacy implementation names only in mapping metadata and deployment aliases, not as the displayed game name.
 - Use hyphens in the game-wise folder slug. Deployment basenames default to the same identifier with underscores and may be overridden in `asset-pack.json` for a legacy app alias.
 - Approved files have no version suffix and use the canonical names shown above.
 - Iterations always include the asset type and `-vNN`.

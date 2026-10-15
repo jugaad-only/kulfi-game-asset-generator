@@ -489,6 +489,23 @@ def assert_asset_pack_tooling() -> None:
         if validation.returncode != 0:
             raise AssertionError(f"new pending pack failed validation: {validation.stdout}{validation.stderr}")
 
+        prompt_asset = game_dir / "smoke-test-video-preview-prompt.md"
+        prompt_asset.write_text("# Smoke Test Video Preview Prompt\n")
+        manifest["assets"]["video_preview_prompt"] = {
+            "status": "approved",
+            "approved_at": "2026-10-15",
+            "depends_on": [],
+            "files": [{"path": prompt_asset.name, "required": True}],
+            "export": {"directory": "game_video_preview_prompts", "basename": "smoke_test"},
+        }
+        (game_dir / "asset-pack.json").write_text(json.dumps(manifest, indent=2) + "\n")
+        text_asset_validation = subprocess.run(validator_command, capture_output=True, text=True, check=False)
+        if text_asset_validation.returncode != 0:
+            raise AssertionError(
+                "validator treated a non-image prompt as an image: "
+                f"{text_asset_validation.stdout}{text_asset_validation.stderr}"
+            )
+
         stray = game_dir / "smoke-test-daily-game-icon.webp"
         stray.write_bytes(b"not-a-final-asset")
         rejected = subprocess.run(validator_command, capture_output=True, text=True, check=False)

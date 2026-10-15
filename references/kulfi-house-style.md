@@ -4,6 +4,8 @@ Read this before writing any thumbnail generation prompt or judging a thumbnail 
 
 ## Required Style Direction
 
+- Never use real people or photorealistic humans in game artwork, including AI-generated realistic people. Human characters must be unmistakably stylized illustration, cartoon, or toy/clay-like 3D. A mature, intimate, or spicy mood does not override this rule. Reject realistic faces, skin pores, photographic hair, and lifelike hands before presenting a candidate.
+
 Kulfi thumbnails should feel like chunky, tactile, polished mobile-game illustrations. Favor toy-like 3D objects, soft rounded geometry, clean silhouettes, crisp foreground edges, friendly lighting, and simple bright-but-controlled color identities. The artwork should read instantly at small mobile shelf size and sit naturally beside other casual game tiles.
 
 Use approved Kulfi thumbnail references whenever possible. This skill package includes:
@@ -49,5 +51,5 @@ Reject and regenerate any thumbnail that is structurally compliant but visually 
 - photorealistic product-shot props or hands
 - gritty adult romance/thriller cover mood
 - static product comparison cards without playful game interaction
-- cluttered mood props in the lower-left quiet zone
+- cluttered mood props in the lower-left quiet zone of a 3:4 or 16:9 thumbnail; the 1:1 Daily Activity tile has no quiet bottom-left restriction
 - polished artwork that looks good alone but mismatches the approved Kulfi shelf

@@ -139,7 +139,7 @@ Reject or revise when any of these appear:
 - Title or logo inside the image.
 - Fake badge, store icon, watermark, promo text, or readable app UI label.
 - Too many focal subjects.
-- Main action hidden in the bottom-left.
+- Main action hidden in the bottom-left of a 3:4 or 16:9 thumbnail. The 1:1 Daily Activity tile is exempt from the quiet bottom-left rule.
 - Board state or implied action contradicts actual game rules.
 - Prompt uses an assumed or invented mechanic for a rules-based game.
 - Rules-based candidate has no recorded mechanic verification source.

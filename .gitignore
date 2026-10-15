@@ -15,6 +15,7 @@ game-assets/
 non-final-assets/
 output/
 outputs/
+legacy-assets/
 
 # Packaged builds and backups; source lives in game-thumbnail-generator/
 dist/

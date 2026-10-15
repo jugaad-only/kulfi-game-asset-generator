@@ -12,6 +12,7 @@ from pathlib import Path
 
 
 ALLOWED_STATUSES = {"pending", "approved", "not-required"}
+IMAGE_SUFFIXES = {".png", ".webp", ".svg"}
 REQUIRED_ASSETS = {
     "thumbnail_3x4",
     "thumbnail_16x9",
@@ -187,7 +188,7 @@ def validate_pack(game_dir: Path) -> list[str]:
                 errors.append(f"assets.{asset_name}: missing approved file {relative.name}")
             if status != "approved" and path.exists():
                 errors.append(f"assets.{asset_name}: unapproved canonical file is at the game-folder root: {relative.name}")
-            if path.is_file():
+            if path.is_file() and path.suffix.lower() in IMAGE_SUFFIXES:
                 issue = check_dimensions(path, constraints_for(asset_value, path))
                 if issue:
                     errors.append(f"assets.{asset_name}: {issue}")
@@ -201,11 +202,11 @@ def validate_pack(game_dir: Path) -> list[str]:
     else:
         valid_iteration = re.compile(r"(?:-v\d{2,}|-replaced-\d{4}-\d{2}-\d{2}|contact-sheet)")
         for path in iterations.iterdir():
-            if path.is_file() and path.suffix.lower() in {".png", ".webp", ".svg"} and not valid_iteration.search(path.stem):
+            if path.is_file() and path.suffix.lower() in IMAGE_SUFFIXES and not valid_iteration.search(path.stem):
                 errors.append(f"iterations/{path.name}: image iterations need -vNN, -replaced-YYYY-MM-DD, or contact-sheet")
 
     for path in game_dir.iterdir():
-        if path.is_file() and path.suffix.lower() in {".png", ".webp", ".svg"} and path.name not in known_root_files:
+        if path.is_file() and path.suffix.lower() in IMAGE_SUFFIXES and path.name not in known_root_files:
             errors.append(f"unexpected root asset not listed in asset-pack.json: {path.name}")
         if path.is_file() and re.search(r"-v\d{2,}", path.stem):
             errors.append(f"versioned candidate must be inside iterations/: {path.name}")
